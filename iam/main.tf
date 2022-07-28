@@ -1,4 +1,4 @@
-## IAM para lambda
+## IAM para lambda s3
 
 resource "aws_iam_role" "iam_lambda_s3" {
   name = "${var.service_name}-lambda-role"
@@ -31,7 +31,40 @@ resource "aws_iam_role_policy_attachment" "lambda_s3-attach" {
   policy_arn = aws_iam_policy.policy_lambda_s3.arn
 }
 
-## IAM para s3
+## IAM para lambda dynamo
+
+resource "aws_iam_role" "iam_lambda_dynamo" {
+  name = "${var.service_name}-lambda-role"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy" "policy_lambda_dynamo" {
+  name = "${var.service_name}-lambda-policy"
+  role = aws_iam_role.iam_lambda_dynamo.id
+
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_dynamo-attach" {
+  role       = aws_iam_role.iam_lambda_dynamo.name
+  policy_arn = aws_iam_policy.policy_lambda_dynamo.arn
+}
+
+## IAM para Lambda se conectar com s3
 
 data "aws_iam_policy_document" "s3" {
   statement {
@@ -48,6 +81,28 @@ data "aws_iam_policy_document" "s3" {
     actions = [
       "s3:*",
       "sns:*",
+    ]
+
+    resources = ["*"]
+  }
+}
+
+## IAM para Lambda se conectar com dynamo
+
+data "aws_iam_policy_document" "dynamo" {
+  statement {
+
+    sid = "AllowDynamoPermissions"
+
+    Effect = "Allow"
+
+    principals {
+      type        = "AWS"
+      identifiers = ["dynamodb.amazonasws.com"]
+    }
+
+    actions = [
+      "dynamodb:*"
     ]
 
     resources = ["*"]

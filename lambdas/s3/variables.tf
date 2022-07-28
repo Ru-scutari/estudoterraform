@@ -22,3 +22,7 @@ variable "tags_lambda" {
     Environment = "Dev"
   }
 }
+
+variable "bucket_arn" {
+  description = "ARN do s3 Bucket"
+}
