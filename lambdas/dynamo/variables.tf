@@ -22,3 +22,10 @@ variable "tags_lambda" {
     Environment = "Dev"
   }
 }
+
+variable "aws_region" {
+
+  description = "Região de onde o provedor AWS está"
+
+  type = string
+}
