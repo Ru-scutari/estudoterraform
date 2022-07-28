@@ -26,7 +26,7 @@ resource "aws_iam_role_policy" "policy_lambda_s3" {
 
 }
 
-resource "aws_iam_role_policy_attachment" "test-attach" {
+resource "aws_iam_role_policy_attachment" "lambda_s3-attach" {
   role       = aws_iam_role.iam_lambda_s3.name
   policy_arn = aws_iam_policy.policy_lambda_s3.arn
 }
