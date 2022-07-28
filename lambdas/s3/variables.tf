@@ -26,3 +26,9 @@ variable "tags_lambda" {
 variable "bucket_arn" {
   description = "ARN do s3 Bucket"
 }
+
+variable "sns_topic_arn" {
+
+  description = "ARN do sns"
+
+}

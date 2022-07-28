@@ -15,3 +15,11 @@ resource "aws_lambda_permission" "api_gateway" {
   principal = "apigateway.amazonaws.com"
   source_arn = "arn:aws:execute-api:${var.aws_region}:${var.aws_account_id}:*/*"
 }
+
+resource "aws_lambda_permission" "sns" {
+  statement_id = "AllowExecutionFromSns"
+  action = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.dynamo.function_name
+  principal = "sns.amazonaws.com"
+  source_arn = var.sns_topic_arn
+}

@@ -29,3 +29,9 @@ variable "aws_region" {
 
   type = string
 }
+
+variable "sns_topic_arn" {
+
+  description = "ARN do sns"
+
+}
